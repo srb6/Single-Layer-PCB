@@ -1,0 +1,130 @@
+(AutoLeveller, Version: 0.7.7, http://autoleveller.co.uk)
+(Copyright 2013 James Hawthorne PhD)
+(Original file: CopperCAM-DRILL-0.7.txt)
+(Creation date: 23/10/2024 time: 18:51)
+
+(This program and any of its output is licensed under GPLv2 and as such...)
+(AutoLeveller comes with ABSOLUTELY NO WARRANTY; for details, see sections 11 and 12 of the GPLv2)
+
+(prerequisites)
+(1. need a working probe)
+(2. tool needs to be within 10mm of copper board for the 1st probe, )
+(i.e. Z0.000 should be no more than 10mm above the board initially)
+(Note: The first probe will touch off Z to 0.000 when it first touches to copper, )
+(all other probe values are relative to this first point)
+
+G21 (millimeters)
+G90 (absolute distance mode, not incremental)
+
+(begin initial probe and set Z to 0)
+G0 X0 Y0 Z0
+G31 Z-10 F100
+G92 Z0
+G0 Z2
+G31 Z-1 F50
+G92 Z0
+G0 Z2
+G0 X0 Y0
+G31 Z-1 F100
+#500=#2002
+G0 Z2
+G0 X10.41033 Y0
+G31 Z-1 F100
+#501=#2002
+G0 Z2
+G0 X20.82067 Y0
+G31 Z-1 F100
+#502=#2002
+G0 Z2
+G0 X31.231 Y0
+G31 Z-1 F100
+#503=#2002
+G0 Z2
+G0 X31.231 Y10.3425
+G31 Z-1 F100
+#507=#2002
+G0 Z2
+G0 X20.82067 Y10.3425
+G31 Z-1 F100
+#506=#2002
+G0 Z2
+G0 X10.41033 Y10.3425
+G31 Z-1 F100
+#505=#2002
+G0 Z2
+G0 X0 Y10.3425
+G31 Z-1 F100
+#504=#2002
+G0 Z2
+G0 X0 Y20.685
+G31 Z-1 F100
+#508=#2002
+G0 Z2
+G0 X10.41033 Y20.685
+G31 Z-1 F100
+#509=#2002
+G0 Z2
+G0 X20.82067 Y20.685
+G31 Z-1 F100
+#510=#2002
+G0 Z2
+G0 X31.231 Y20.685
+G31 Z-1 F100
+#511=#2002
+G0 Z2
+G0 X0 Y0 Z20
+(Set S value to ensure Speed has a value otherwise the spindle will not start on an M3 command)
+S20000
+
+(The program will pause to allow the probe to be detached)
+(press cycle start to resume from current line)
+M0
+
+
+(The original mill file is now rewritten with z depth replaced with a)
+(bilinear interpolated value based on the initial probing)
+
+%
+( CopperCAM - 29/07/2019 / ISO-Mill Output )
+( C:\COPPERCAM\CopperCAM.iso created 23/10/2024 at 16:23 )
+( Workpiece dimensions: 65.08 x 45.08 x 1 mm )
+G21 G40 G54
+G80 G90 G94
+( Tool #7 "Basic Drill" / Diameter 0.7 mm )
+T7 M6
+M3 S12000
+M7
+G0 X28.691 Y20.685
+G0 Z0
+#102=[#510+0*#511-0*#510]
+#101=#511
+#100=[#102+0.75601*#101-0.75601*#102]
+G1 F60 Z[#100 + -2]
+G0 Z2
+G0 X31.231
+G0 Z0
+#102=[#510+0*#511-0*#510]
+#101=#511
+#100=[#102+1*#101-1*#102]
+G1 F60 Z[#100 + -2]
+G0 Z2
+G0 X14.721
+G0 Z0
+#102=#509
+#101=[#510+0*#509-0*#510]
+#100=[#102+0.41408*#101-0.41408*#102]
+G1 F60 Z[#100 + -2]
+G0 Z2
+G0 X12.181
+G0 Z0
+#102=#509
+#101=[#510+0*#509-0*#510]
+#100=[#102+0.17009*#101-0.17009*#102]
+G1 F60 Z[#100 + -2]
+G0 Z2
+G0 X0 Y0
+M9
+M5
+M2
+%
+
